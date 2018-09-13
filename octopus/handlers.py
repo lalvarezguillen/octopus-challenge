@@ -12,7 +12,6 @@ class MainHandler(tornado.web.RequestHandler):
 
 class AnalysisHandler(tornado.web.RequestHandler):
     def get(self, task_id=None):
-        print("GET /task")
         if not task_id:
             self.set_status(404)
             self.finish()
@@ -27,7 +26,6 @@ class AnalysisHandler(tornado.web.RequestHandler):
             return
 
         self.set_status(200)
-        print(type(task.result), task.result)
         self.finish(task.result)
 
     def post(self, **_):
@@ -47,12 +45,3 @@ class AdminHandler(tornado.web.RequestHandler):
     def get(self):
         pass
 
-
-# task = CELERY_SINGLETON.AsyncResult(task_id)
-#     task_is_ready = task.ready()
-#     if not task_is_ready:
-#         return "", 204
-#     elif task_is_ready:
-#         result = json.loads(task.result)
-#         print(result)
-#         return json.dumps(result), 200, {"Content-Type": "application/json"}

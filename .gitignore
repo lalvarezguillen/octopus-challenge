@@ -3,4 +3,5 @@
 .vscode
 *__pycache__*
 .autoenv
-spec.md
+notes.md
+.pytest_cache

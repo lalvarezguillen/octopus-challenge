@@ -5,6 +5,6 @@ class TaskRequestSchema(Schema):
     url = fields.Url(required=True)
 
 
-class TaskResultSchea(Schema):
+class TaskResultSchema(Schema):
     token = fields.Str(required=True)
     frequency = fields.Int(required=True)
