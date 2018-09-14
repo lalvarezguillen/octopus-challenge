@@ -9,7 +9,7 @@ from .helpers import parse_pagination
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        pass
+        self.render("main.html")
 
 
 class AnalysisHandler(tornado.web.RequestHandler):
