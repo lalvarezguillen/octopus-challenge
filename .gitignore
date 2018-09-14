@@ -5,3 +5,5 @@
 .autoenv
 notes.md
 .pytest_cache
+*.sqlite3
+*.key

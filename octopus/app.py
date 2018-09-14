@@ -2,6 +2,7 @@ import tornado.ioloop
 import tornado.web
 from .handlers import MainHandler, AdminHandler, AnalysisHandler
 from .config import PORT
+from .models import db, URL, Token
 
 
 def make_app():

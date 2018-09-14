@@ -3,6 +3,8 @@ import tornado
 import tornado.web
 from .schemas import TaskRequestSchema
 from .jobs import CELERY, frequency_analysis, sentiment_analysis
+from .models import Token
+from .helpers import parse_pagination
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -43,5 +45,8 @@ class AnalysisHandler(tornado.web.RequestHandler):
 
 class AdminHandler(tornado.web.RequestHandler):
     def get(self):
-        pass
-
+        page = parse_pagination(self.get_query_argument("page", 1))
+        size = parse_pagination(self.get_query_argument("size", 50))
+        content = Token.get_page(page, size)
+        self.set_status(202)
+        self.finish(tornado.escape.json_encode(content))
