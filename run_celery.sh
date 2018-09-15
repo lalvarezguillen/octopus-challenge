@@ -4,4 +4,4 @@ export REDIS_HOST='redis://localhost:6379'
 export SALT='it is salty'
 export PRIVATE_KEY_FILE=dummy.key
 
-celery -A octopus.jobs worker
+celery -A run_celery.CELERY worker

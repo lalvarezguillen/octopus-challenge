@@ -1,10 +1,13 @@
+/* Contains code to render the view of the admin panel */
 import React from 'react';
 import Axios from 'axios';
 import ReactTable from "react-table";
 import 'react-table/react-table.css'
 import 'regenerator-runtime/runtime';
 
-
+/**
+ * AdminPage is the "administrative interface" of the app
+ */
 class AdminPage extends React.Component {
     constructor(props) {
         super(props);
@@ -17,17 +20,23 @@ class AdminPage extends React.Component {
         this.getData = this.getData.bind(this);
     }
 
-    async getData(state, instance) {
+    /**
+     * getData fetches a page full of tokens and their frequencies
+     * from the backend, and stores it in the state of this component
+     * @param {*} state The state of ReactTable
+     * @param {*} _ 
+     */
+    async getData(state, _) {
         const params = {
             // page: state.page * this.pageSize,
             page: state.page,
             size: this.pageSize,
         }
-        this.setState({loading: true});
+        this.setState({ loading: true });
 
         let response;
         try {
-            response = await Axios.get('/tokens', {params: params});
+            response = await Axios.get('/tokens', { params: params });
         } catch (err) {
             console.error(err)
             return
@@ -39,12 +48,15 @@ class AdminPage extends React.Component {
         });
     }
 
+    /**
+     * createTable renders a ReactTable to list tokens with their frequencies
+     */
     createTable() {
-        const {tokens, loading, totalPages} = this.state;
+        const { tokens, loading, totalPages } = this.state;
         return (
             <ReactTable
                 data={tokens}
-                columns = {[
+                columns={[
                     {
                         Header: "Token",
                         accessor: "token",
@@ -66,8 +78,8 @@ class AdminPage extends React.Component {
         )
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 {this.createTable()}
             </div>

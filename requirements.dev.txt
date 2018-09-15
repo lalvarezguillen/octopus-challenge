@@ -3,3 +3,4 @@ mypy
 pytest
 pylint
 pytest-cov
+responses

@@ -1,3 +1,4 @@
+/* Entrypoint for the Single Page Application */
 import React, { Component } from 'react';
 import {
   Route,
@@ -37,11 +38,27 @@ class App extends Component {
       <HashRouter>
         <div>
           <Alert />
-          <header id="js-header" className="u-header u-header--sticky-top u-header--toggle-section u-header--change-appearance" data-header-fix-moment="300">
-            <div className="u-header__section u-header__section--dark g-bg-black g-transition-0_3 g-py-10" data-header-fix-moment-exclude="g-py-10" data-header-fix-moment-classes="g-py-0">
+          <header
+            id="js-header"
+            className="u-header u-header--sticky-top u-header--toggle-section u-header--change-appearance"
+            data-header-fix-moment="300"
+          >
+            <div
+              className="u-header__section u-header__section--dark g-bg-black g-transition-0_3 g-py-10"
+              data-header-fix-moment-exclude="g-py-10"
+              data-header-fix-moment-classes="g-py-0"
+            >
               <nav className="navbar navbar-expand-lg">
                 <div className="container">
-                  <button className="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-3 g-right-0" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                  <button
+                    className="navbar-toggler navbar-toggler-right btn g-line-height-1 g-brd-none g-pa-0 g-pos-abs g-top-3 g-right-0"
+                    type="button"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false"
+                    aria-controls="navBar"
+                    data-toggle="collapse"
+                    data-target="#navBar"
+                  >
                     <span className="hamburger hamburger--slider">
                       <span className="hamburger-box">
                         <span className="hamburger-inner"></span>
@@ -51,7 +68,10 @@ class App extends Component {
 
                   <NavLink className="navbar-brand" to="/">SendGrid</NavLink>
 
-                  <div className="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg" id="navBar">
+                  <div
+                    className="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg"
+                    id="navBar"
+                  >
                     <ul className="navbar-nav text-uppercase g-font-weight-600 ml-auto">
                       <li className="nav-item g-mx-20--lg">
                         <NavLink className="nav-link px-0" to="/">Home</NavLink>

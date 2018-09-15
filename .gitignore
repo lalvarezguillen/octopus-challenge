@@ -8,3 +8,4 @@ notes.md
 *.sqlite3
 *.key
 *node_modules
+.coverage

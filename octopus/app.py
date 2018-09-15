@@ -1,17 +1,25 @@
+"""
+This module contains code to set up tornado and celery.
+"""
 import os
 import tornado.ioloop
 import tornado.web
 from .handlers import MainHandler, TokensHandler, AnalysisHandler
-from .config import PORT
-from .models import db, URL, Token
+from .config import Config
+from .models import BaseModel, URL, Token, SqliteDatabase, db
+from .jobs import CELERY
+from .crypto import Encryptor
 
 
 def make_app():
+    """
+    Creates the Tornado app, updates Celery's settings and sets up the DB.
+    """
     static_path = os.path.join(
         os.path.dirname(__file__), os.pardir, "frontend", "dist"
     )
     print(static_path)
-    return tornado.web.Application(
+    app = tornado.web.Application(
         [
             (r"/", MainHandler),
             (r"/tokens", TokensHandler),
@@ -20,10 +28,31 @@ def make_app():
         ],
         debug=True,
         static_path=static_path,
+        encryptor=Encryptor(Config.PRIVATE_KEY_FILE, Config.SALT),
     )
+    app.settings.update(Config.export())
+    CELERY.conf.update(app.settings)
+    CELERY.conf.update()
+    print(CELERY.conf)
+
+    setup_db(db)
+
+    return app
+
+
+def setup_db(db):
+    """
+    Sets up the DB
+    """
+    db.init(Config.DB_HOST)
+    db.connect()
+    db.create_tables([URL, Token])
 
 
 def run_app():
+    """
+    Starts running the tornado app
+    """
     app = make_app()
-    app.listen(PORT)
+    app.listen(Config.PORT)
     tornado.ioloop.IOLoop.current().start()

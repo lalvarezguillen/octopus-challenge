@@ -1,3 +1,4 @@
+/* Contains code to render the landing page of the website. */
 import React from 'react';
 import Axios from 'axios';
 import ReactWordCloud from 'react-wordcloud';
@@ -6,14 +7,14 @@ import { ClipLoader, PacmanLoader } from 'react-spinners';
 import Alert from 'react-s-alert';
 
 
+/**
+ * LandingPage of the SPA
+ */
 class LandingPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tokens: [],
-      feedback: {
-        url: ''
-      },
       loading: false,
     }
     this.urlInput = React.createRef();
@@ -24,6 +25,14 @@ class LandingPage extends React.Component {
     this.alertError = this.alertError.bind(this);
   }
 
+  /**
+   * handleSubmit manages the submission of the form where
+   * the URL for the website to analyze was provided.
+   * It takes care of sending the URL to the backend, and
+   * waiting for the analysis results, to store those in
+   * the component's state.
+   * @param {*} event The JS event produced on form submission.
+   */
   async handleSubmit(event) {
     this.setState({ loading: true });
     event.preventDefault();
@@ -43,6 +52,12 @@ class LandingPage extends React.Component {
     await this.waitForAnalysis(taskId);
   }
 
+  /**
+   * requestAnalysis makes an http call to the backend,
+   * requesting that a particular web page is analyzed.
+   * It returns the ID of the task that will do the
+   * analyzing.
+   */
   async requestAnalysis() {
     console.log("Requesting analysis")
     const url = '/task/';
@@ -52,10 +67,19 @@ class LandingPage extends React.Component {
     return resp.data.id;
   }
 
+  /**
+   * Flashes an error message
+   * @param {string} msg The error message to display
+   */
   alertError(msg) {
     Alert.error(msg, { position: 'bottom' })
   }
 
+  /**
+   * waitForAnalysis queries the state of an analysis until its ready,
+   * and then stores the result in the state of the component.
+   * @param {*} analysisId 
+   */
   async waitForAnalysis(analysisId) {
     console.log('waiting for analysis')
     const url = `/task/${analysisId}`;
@@ -76,13 +100,6 @@ class LandingPage extends React.Component {
     }
   }
 
-  handleOnChange(event) {
-    this.setState({
-      value: event.target.value,
-      feedback: {},
-    });
-  }
-
   render() {
     return (
       <div>
@@ -98,9 +115,13 @@ class LandingPage extends React.Component {
                   />
                 </div>
               </div>
-              <button className="btn btn-md u-btn-black" type="submit" disabled={this.state.loading}>
+              <button
+                className="btn btn-md u-btn-black"
+                type="submit"
+                disabled={this.state.loading}
+              >
                 Analyze!
-                      </button>
+              </button>
             </div>
           </form>
         </div>
@@ -120,12 +141,14 @@ class LandingPage extends React.Component {
   }
 }
 
+/**
+ * Creates a cloud of words, from the tokens that the
+ * backend encountered in a particular web page.
+ */
 class TokensCloud extends React.Component {
   constructor(props) {
     super(props);
   }
-
-
   render() {
     return (
       <div>
