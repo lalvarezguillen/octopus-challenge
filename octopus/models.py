@@ -1,4 +1,4 @@
-from typing import Optional, List, Iterator
+from typing import Optional, List, Iterator, Tuple
 from peewee import SqliteDatabase, Model, CharField, IntegerField, DateTimeField
 from .config import DB_HOST
 from .crypto import salted_hash, encrypt, decrypt
@@ -54,15 +54,17 @@ class Token(BaseModel):
         return token
 
     @classmethod
-    def get_page(cls, page: int, size: int) -> List[TokenCount]:
+    def get_page(cls, page: int, size: int) -> Tuple[List[TokenCount], int]:
         print(page, size)
         cursor = (
             cls.select()
             .order_by(cls.frequency.desc())
-            .offset((page - 1) * size)
+            .offset((page) * size)
             .limit(size)
         )
-        return [cls.decrypt_entry(entry) for entry in cursor]
+        tokens = [cls.decrypt_entry(entry) for entry in cursor]
+        total = cls.select().count()
+        return tokens, total
 
     @staticmethod
     def decrypt_entry(entry: "Token") -> TokenCount:
