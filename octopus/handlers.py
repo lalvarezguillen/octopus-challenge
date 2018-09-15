@@ -4,7 +4,7 @@ Contains the http handlers of this application
 import json
 import tornado
 import tornado.web
-from .schemas import TaskRequestSchema
+from .schemas import TaskRequestSchema, TaskResultSchema
 from .jobs import CELERY, frequency_analysis, sentiment_analysis
 from .models import Token
 from .helpers import parse_pagination
@@ -37,7 +37,7 @@ class AnalysisHandler(tornado.web.RequestHandler):
             return
 
         self.set_status(200)
-        self.finish(task.result)
+        self.finish(tornado.escape.json_encode(task.result))
 
     def post(self, **_):
         """
