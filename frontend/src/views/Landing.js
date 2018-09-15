@@ -18,7 +18,6 @@ class LandingPage extends React.Component {
       loading: false,
     }
     this.urlInput = React.createRef();
-    this.handleOnChange = this.handleOnChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.waitForAnalysis = this.waitForAnalysis.bind(this);
     this.requestAnalysis = this.requestAnalysis.bind(this);
@@ -60,7 +59,7 @@ class LandingPage extends React.Component {
    */
   async requestAnalysis() {
     console.log("Requesting analysis")
-    const url = '/task/';
+    const url = '/tasks/';
     const payload = { url: this.urlInput.current.value };
     let resp;
     resp = await Axios.post(url, payload)
@@ -82,7 +81,7 @@ class LandingPage extends React.Component {
    */
   async waitForAnalysis(analysisId) {
     console.log('waiting for analysis')
-    const url = `/task/${analysisId}`;
+    const url = `/tasks/${analysisId}`;
     let resp;
     try {
       resp = await Axios.get(url);

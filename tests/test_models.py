@@ -1,4 +1,5 @@
-from octopus.models import URL, Token, db
+from peewee import SqliteDatabase
+from octopus.models import URL, Token, db as db
 from octopus.crypto import Encryptor
 from .test_crypto import CryptoTestsMixin
 
@@ -18,10 +19,14 @@ class TestURL(CryptoTestsMixin):
     @classmethod
     def setup_class(cls):
         super().setup_class()
-        db.init(":memory:")
-        db.connect()
-        db.create_tables([URL, Token])
+        test_db = SqliteDatabase(":memory:")
+        URL._meta.set_database(test_db)
+        db.create_tables([URL])
         cls.enc = Encryptor(cls.private_key_file, "salty")
+
+    @classmethod
+    def teardown_class(cls):
+        URL._meta.set_database(db)
 
     def test_get_by_hash_nonexistent(self):
         assert URL.get_by_hash("non-existet.com", self.enc) is None
@@ -49,8 +54,12 @@ class TestToken(CryptoTestsMixin):
         super().setup_class()
         db.init(":memory:")
         db.connect()
-        db.create_tables([URL, Token])
+        db.create_tables([Token])
         cls.enc = Encryptor(cls.private_key_file, "salty")
+
+    @classmethod
+    def teardown_class(cls):
+        Token._meta.set_database(db)
 
     def test_update_new_token(self):
         initial_count = Token.select().count()

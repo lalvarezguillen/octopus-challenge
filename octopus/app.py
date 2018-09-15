@@ -23,8 +23,8 @@ def make_app():
         [
             (r"/", MainHandler),
             (r"/tokens", TokensHandler),
-            (r"/task/?", AnalysisHandler),
-            (r"/task/(?P<task_id>[a-zA-Z0-9\-_]+)", AnalysisHandler),
+            (r"/tasks/?", AnalysisHandler),
+            (r"/tasks/(?P<task_id>[a-zA-Z0-9\-_]+)", AnalysisHandler),
         ],
         debug=True,
         static_path=static_path,
@@ -33,7 +33,7 @@ def make_app():
     app.settings.update(Config.export())
     CELERY.conf.update(app.settings)
     CELERY.conf.update()
-    print(CELERY.conf)
+    # print(CELERY.conf)
 
     setup_db(db)
 
