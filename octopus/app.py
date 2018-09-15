@@ -6,7 +6,7 @@ import tornado.ioloop
 import tornado.web
 from .handlers import MainHandler, TokensHandler, AnalysisHandler
 from .config import Config
-from .models import BaseModel, URL, Token, SqliteDatabase, db
+from .models import BaseModel, URL, Token, db
 from .jobs import CELERY
 from .crypto import Encryptor
 
@@ -33,14 +33,11 @@ def make_app():
     app.settings.update(Config.export())
     CELERY.conf.update(app.settings)
     CELERY.conf.update()
-    # print(CELERY.conf)
-
-    setup_db(db)
 
     return app
 
 
-def setup_db(db):
+def setup_db():
     """
     Sets up the DB
     """

@@ -3,12 +3,12 @@ This module should contain the code required to interact
 with our DB.
 """
 from typing import Optional, List, Iterator, Tuple
-from peewee import SqliteDatabase, Model, CharField, IntegerField, DateTimeField
+from peewee import Model, CharField, IntegerField, DateTimeField, MySQLDatabase
 from .crypto import Encryptor
 from .nlp import TokenCount
 from .schemas import TokenSchema
 
-db = SqliteDatabase(None)
+db = MySQLDatabase(None)
 
 
 class BaseModel(Model):

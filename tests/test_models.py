@@ -52,8 +52,8 @@ class TestToken(CryptoTestsMixin):
     @classmethod
     def setup_class(cls):
         super().setup_class()
-        db.init(":memory:")
-        db.connect()
+        test_db = SqliteDatabase(":memory:")
+        Token._meta.set_database(test_db)
         db.create_tables([Token])
         cls.enc = Encryptor(cls.private_key_file, "salty")
 

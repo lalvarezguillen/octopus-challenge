@@ -1,5 +1,6 @@
-from octopus.app import run_app
+from octopus.app import run_app, setup_db
 
 
 if __name__ == "__main__":
+    setup_db()
     run_app()
