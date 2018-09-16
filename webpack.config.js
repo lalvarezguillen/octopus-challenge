@@ -2,7 +2,7 @@ const path = require('path');
 console.log(path.join(__dirname))
 module.exports = {
     mode: 'development',
-    entry: './src/index.js',
+    entry: './frontend/src/index.js',
     output: {
         path: path.resolve(__dirname, './dist'),
         filename: 'bundle.js',
@@ -20,7 +20,7 @@ module.exports = {
                         // presets: ['react']
                     }
                 }
-        }
+            }
         ]
     }
 }

@@ -9,3 +9,4 @@ notes.md
 *.key
 *node_modules
 .coverage
+dist
