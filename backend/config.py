@@ -23,12 +23,14 @@ class Config:
     # Redis configuration
     REDIS_HOST = os.environ["REDIS_HOST"]
 
-    # A salt to use in the application's hashing.
+    # A path to a file that contains the salt to use in the application's hashing.
     SALT_FILE = os.environ["SALT_FILE"]
+    # The value of the salt
     SALT = None
 
-    # A private RSA key to use in the application's encryption.
+    # The path to private RSA key to use in the application's encryption.
     PRIVATE_KEY_FILE = os.environ["PRIVATE_KEY_FILE"]
+    # The content of the RSA key
     PRIVATE_KEY = None
 
     def __init__(self):
