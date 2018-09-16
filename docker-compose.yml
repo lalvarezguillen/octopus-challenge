@@ -36,8 +36,6 @@ services:
       - MYSQL_DATABASE
   web:
     environment: *common-variables
-    ports:
-      - "3000:80"
     build:
       context: .
       dockerfile: web.Dockerfile
