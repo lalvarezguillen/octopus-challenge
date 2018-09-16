@@ -31,7 +31,7 @@ The project's configuration is set through environment variables.
 For more information about each of the configurable paramaters, read their documentation in backend/config.py
 
 
-### Handling secrets securily
+### Handling secrets securely
 
 * Avoid including production secrets in the repo
 * Avoid including production secrets in the container build
@@ -69,6 +69,7 @@ The project has been formatted with Black, and I've deferred every code styling 
 ### Requirements
 
 * Python >= 3.6
+* NodeJS
 * MySQL
 
 
