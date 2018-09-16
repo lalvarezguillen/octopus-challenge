@@ -24,22 +24,31 @@ class Config:
     REDIS_HOST = os.environ["REDIS_HOST"]
 
     # A salt to use in the application's hashing.
-    SALT = os.environ["SALT"]
+    SALT_FILE = os.environ["SALT_FILE"]
+    SALT = None
 
     # A private RSA key to use in the application's encryption.
-    PRIVATE_KEY = os.environ["PRIVATE_KEY"]
+    PRIVATE_KEY_FILE = os.environ["PRIVATE_KEY_FILE"]
+    PRIVATE_KEY = None
 
-    @classmethod
-    def export(cls) -> dict:
+    def __init__(self):
+        with open(self.SALT_FILE, "rb") as f:
+            self.SALT = f.read()
+
+        with open(self.PRIVATE_KEY_FILE, "rb") as f:
+            self.PRIVATE_KEY = f.read()
+
+    def export(self) -> dict:
         return {
-            "DEBUGGING": cls.DEBUGGING,
-            "PORT": cls.PORT,
-            "DB_HOST": cls.DB_HOST,
-            "DB_PORT": cls.DB_PORT,
-            "DB_NAME": cls.DB_NAME,
-            "DB_USER": cls.DB_USER,
-            "DB_PASS": cls.DB_PASS,
-            "REDIS_HOST": cls.REDIS_HOST,
-            "SALT": cls.SALT,
-            "PRIVATE_KEY": cls.PRIVATE_KEY,
+            "DEBUGGING": self.DEBUGGING,
+            "PORT": self.PORT,
+            "DB_HOST": self.DB_HOST,
+            "DB_PORT": self.DB_PORT,
+            "DB_NAME": self.DB_NAME,
+            "DB_USER": self.DB_USER,
+            "DB_PASS": self.DB_PASS,
+            "REDIS_HOST": self.REDIS_HOST,
+            "SALT": self.SALT,
+            "PRIVATE_KEY": self.PRIVATE_KEY,
         }
+

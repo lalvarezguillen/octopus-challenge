@@ -11,7 +11,7 @@ Running the project will spin up 4 docker containers:
 * A MySQL server to persist the application's data
 * A Redis server to act as IPC vehicle between the web application and the Celery workers
 
-The repo includes some throwaway settings by default.
+The repo includes some throwaway settings and keys, to be able to hit the ground running.
 
 Spin un up the containers with:
 
@@ -33,10 +33,10 @@ For more information about each of the configurable paramaters, read their docum
 
 ### Handling secrets securily
 
-* Avoid including production/staging secrets in the repo
-* Avoid including production/staging secrets in the container build
+* Avoid including production secrets in the repo
+* Avoid including production secrets in the container build
 * Environment variables should be a non-terrible way to inject sensitive information when launching the services
-* Docker Secrets should be the preferred alternative, if the infrastructure permits.
+* Docker Secrets should be the preferred alternative, if the infrastructure permits, since it handles most of the security for us.. I've made the decision of use this Docker Secrets in this version of the project
 
 ## Hacking on the project
 

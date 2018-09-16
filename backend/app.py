@@ -20,6 +20,8 @@ def make_app():
     """
     static_path = os.path.join(os.path.dirname(__file__), os.pardir, "dist")
     logging.debug(static_path)
+
+    conf = Config()
     app = tornado.web.Application(
         [
             (r"/", MainHandler),
@@ -27,11 +29,11 @@ def make_app():
             (r"/tasks/?", AnalysisHandler),
             (r"/tasks/(?P<task_id>[a-zA-Z0-9\-_]+)", AnalysisHandler),
         ],
-        debug=Config.DEBUGGING,
+        debug=conf.DEBUGGING,
         static_path=static_path,
-        encryptor=Encryptor(Config.PRIVATE_KEY, Config.SALT),
+        encryptor=Encryptor(conf.PRIVATE_KEY, conf.SALT),
     )
-    app.settings.update(Config.export())
+    app.settings.update(CONFIG=conf.export())
     CELERY.conf.update(app.settings)
     CELERY.conf.update()
 

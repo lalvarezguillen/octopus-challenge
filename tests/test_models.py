@@ -10,9 +10,7 @@ class TestURL:
         test_db = SqliteDatabase(":memory:")
         URL._meta.set_database(test_db)
         db.create_tables([URL])
-        cls.enc = Encryptor(
-            RSA.generate(2048).exportKey().decode("utf8"), "salty"
-        )
+        cls.enc = Encryptor(RSA.generate(2048).exportKey(), b"salty")
 
     @classmethod
     def teardown_class(cls):
@@ -44,9 +42,7 @@ class TestToken:
         test_db = SqliteDatabase(":memory:")
         Token._meta.set_database(test_db)
         db.create_tables([Token])
-        cls.enc = Encryptor(
-            RSA.generate(2048).exportKey().decode("utf8"), "salty"
-        )
+        cls.enc = Encryptor(RSA.generate(2048).exportKey(), b"salty")
 
     @classmethod
     def teardown_class(cls):
@@ -115,5 +111,5 @@ class TestToken:
         decrypted = token.decrypt(self.enc)
         assert token.encrypted != decrypted["token"]
         assert self.enc.decrypt(token.encrypted) == decrypted["token"]
-        assert token.frequency == decrypted['frequency']
+        assert token.frequency == decrypted["frequency"]
 
