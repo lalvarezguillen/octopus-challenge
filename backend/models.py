@@ -108,7 +108,6 @@ class Token(BaseModel):
             size: The number of tokens to include in the page of results.
             enc: an object capable of decrypting tokens.
         """
-        print(page, size)
         cursor = (
             cls.select()
             .order_by(cls.frequency.desc())

@@ -2,6 +2,7 @@
 This module contains code to set up tornado and celery.
 """
 import os
+import logging
 import tornado.ioloop
 import tornado.web
 import peewee
@@ -18,7 +19,7 @@ def make_app():
     Creates the Tornado app, updates Celery's settings and sets up the DB.
     """
     static_path = os.path.join(os.path.dirname(__file__), os.pardir, "dist")
-    print(static_path)
+    logging.debug(static_path)
     app = tornado.web.Application(
         [
             (r"/", MainHandler),

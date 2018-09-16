@@ -3,6 +3,7 @@ Contains generic helpers for this project
 """
 import time
 import math
+import logging
 from typing import Callable, Tuple, Any
 
 
@@ -47,6 +48,6 @@ def retry(
         except errors as err:
             if tries == times:
                 raise err
-            print(f"retrying {operation}")
+            logging.debug(f"retrying {operation}")
             time.sleep(math.pow(5, tries))
             tries += 1

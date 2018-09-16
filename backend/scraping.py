@@ -2,6 +2,7 @@
 This module should contain code to handle the web scraping
 that this project will need.
 """
+import logging
 import requests
 from bs4 import BeautifulSoup
 
@@ -32,7 +33,7 @@ def fetch_page_text(url: str) -> str:
         The clean content of the website.
     """
     resp = requests.get(url)
-    print(resp.status_code)
+    logging.info(resp.status_code)
     if resp.status_code in RETRIABLE:
         raise RetriableHTTPError
 

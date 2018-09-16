@@ -3,6 +3,7 @@ This module should contain the asynchronous tasks that power
 this project
 """
 from typing import List, Optional
+import logging
 import requests
 from celery import Celery
 from .config import Config
@@ -34,10 +35,10 @@ def frequency_analysis(self, url: str) -> Optional[List[TokenCount]]:
         A collection that contains the tokens encountered on the
         web page, and their counts.
     """
-    print("Frequency Analysis Task")
+    logging.info("Frequency Analysis Task")
     page_text = retry(lambda: fetch_page_text(url), HTTPErrors, times=2)
     counts = get_frequent_tokens(page_text, 100)
-    print(counts)
+    logging.debug(counts)
     store_in_db.delay(url, counts)
     return counts
 
@@ -51,17 +52,17 @@ def store_in_db(self, url: str, counts: List[TokenCount]):
         url: the URL of the page analyzed
         counts: contains the tokens encountered and their frequencies
     """
-    print("Store in DB Task")
+    logging.info("Store in DB Task")
     enc = self.app.conf["encryptor"]
     if URL.get_by_hash(url, enc) is None:
-        print(f"{url} is new")
+        logging.debug(f"{url} is new")
         URL.new(url, enc)
         Token.batch_update(counts, enc)
         return
-    print(f"{url} is not new")
+    logging.debug(f"{url} is not new")
 
 
 @CELERY.task
 def sentiment_analysis():
-    print("Sentiment Analysis Task")
+    logging.info("Sentiment Analysis Task")
     raise NotImplementedError()
