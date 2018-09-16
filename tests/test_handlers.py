@@ -45,6 +45,15 @@ class TestAnalysisHandler(AsyncHTTPTestCase):
         assert resp.code == 200
         assert json.loads(resp.body) == dummy_result
 
+    def test_get_task_failure(self, celery_mock, *_):
+        task_mock = mock.MagicMock()
+        task_mock.ready.return_value = True
+        task_mock.result = Exception()
+        celery_mock.AsyncResult.return_value = task_mock
+
+        resp = self.fetch("/tasks/some-task")
+        assert resp.code == 400
+
     def test_post_task_malformed_payload(self, *_):
         payload = ["this is", "sparta"]
 
