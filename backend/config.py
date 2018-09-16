@@ -34,6 +34,9 @@ class Config:
     PRIVATE_KEY = None
 
     def __init__(self):
+        """
+        Loads the content of the private key and the salt
+        """
         with open(self.SALT_FILE, "rb") as f:
             self.SALT = f.read()
 
