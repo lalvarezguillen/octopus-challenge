@@ -36,7 +36,7 @@ For more information about each of the configurable paramaters, read their docum
 * Avoid including production secrets in the repo
 * Avoid including production secrets in the container build
 * Environment variables should be a non-terrible way to inject sensitive information when launching the services
-* Docker Secrets should be the preferred alternative, if the infrastructure permits, since it handles most of the security for us.. I've made the decision of use this Docker Secrets in this version of the project
+* Docker Secrets should be the preferred alternative, if the infrastructure permits, since it handles most of the security for us.. I've made the decision of using Docker Secrets in this version of the project
 
 ## Hacking on the project
 
