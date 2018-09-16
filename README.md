@@ -1,4 +1,4 @@
-# Octopuslabs Challenge
+# Octopuslabs Challenge [![Build Status](https://travis-ci.org/lalvarezguillen/octopus-challenge.svg?branch=master)](https://travis-ci.org/lalvarezguillen/octopus-challenge) [![codecov](https://codecov.io/gh/lalvarezguillen/octopus-challenge/branch/master/graph/badge.svg)](https://codecov.io/gh/lalvarezguillen/octopus-challenge)
 
 This is my solution to the technical challenge by Octopuslabs.
 
