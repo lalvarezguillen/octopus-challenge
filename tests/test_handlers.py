@@ -3,13 +3,15 @@ from tornado.testing import AsyncHTTPTestCase, gen_test
 from tornado.web import Application
 from tornado.httpserver import HTTPRequest
 from unittest import mock
+import backend.app
 from backend.app import make_app
 import backend.handlers
 
 
 class TestMainHandler(AsyncHTTPTestCase):
     def get_app(self):
-        return make_app()
+        with mock.patch("backend.app.setup_db") as _:
+            return make_app()
 
     def test_get_ok(self):
         resp = self.fetch("/")
@@ -20,7 +22,8 @@ class TestMainHandler(AsyncHTTPTestCase):
 @mock.patch("backend.handlers.CELERY")
 class TestAnalysisHandler(AsyncHTTPTestCase):
     def get_app(self):
-        return make_app()
+        with mock.patch("backend.app.setup_db") as _:
+            return make_app()
 
     def test_get_missing_task_id(self, *_):
         resp = self.fetch("/tasks")
@@ -75,7 +78,8 @@ class TestAnalysisHandler(AsyncHTTPTestCase):
 @mock.patch("backend.handlers.Token")
 class TestTokensHandler(AsyncHTTPTestCase):
     def get_app(self):
-        return make_app()
+        with mock.patch("backend.app.setup_db") as _:
+            return make_app()
 
     def test_get_(self, mocked_token):
         tokens = [

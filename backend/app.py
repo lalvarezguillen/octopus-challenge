@@ -14,6 +14,21 @@ from .crypto import Encryptor
 from .helpers import retry
 
 
+def setup_db():
+    """
+    Sets up the DB
+    """
+    db.init(
+        Config.DB_NAME,
+        host=Config.DB_HOST,
+        port=Config.DB_PORT,
+        user=Config.DB_USER,
+        password=Config.DB_PASS,
+    )
+    retry(db.connect, (peewee.OperationalError, peewee.InternalError), times=5)
+    db.create_tables([URL, Token])
+
+
 def make_app():
     """
     Creates the Tornado app, updates Celery's settings and sets up the DB.
@@ -36,23 +51,8 @@ def make_app():
     app.settings.update(CONFIG=conf.export())
     CELERY.conf.update(app.settings)
     CELERY.conf.update()
-
+    setup_db()
     return app
-
-
-def setup_db():
-    """
-    Sets up the DB
-    """
-    db.init(
-        Config.DB_NAME,
-        host=Config.DB_HOST,
-        port=Config.DB_PORT,
-        user=Config.DB_USER,
-        password=Config.DB_PASS,
-    )
-    retry(db.connect, (peewee.OperationalError, peewee.InternalError), times=5)
-    db.create_tables([URL, Token])
 
 
 def run_app():

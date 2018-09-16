@@ -6,7 +6,7 @@ export DB_PORT=3306
 export DB_USER=root
 export DB_PASS=root
 export REDIS_HOST='redis://localhost:6379'
-export SALT=salt.txt
+export SALT_FILE=salt.txt
 export PRIVATE_KEY_FILE=private.key
 
 celery -A run_celery.CELERY worker --loglevel=info
