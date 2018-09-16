@@ -27,9 +27,11 @@ def parse_pagination(arg: str) -> int:
     return int_arg
 
 
-def retry(operation: Callable, errors: Tuple[BaseException, ...], times: int=1) -> Any:
-    '''
-    Retries an operation up N times if errors of particular types come up.
+def retry(
+    operation: Callable, errors: Tuple[BaseException, ...], times: int = 1
+) -> Any:
+    """
+    Retries an operation up to N times if errors of particular types come up.
     Args:
         operation: The operation that will be retried. It should be a function
         that takes no arguments.
@@ -37,7 +39,7 @@ def retry(operation: Callable, errors: Tuple[BaseException, ...], times: int=1) 
         times: The max number of times that operation will be retried
     Returns:
         Whatever operation() returns
-    '''
+    """
     tries = 0
     while True:
         try:
@@ -45,6 +47,6 @@ def retry(operation: Callable, errors: Tuple[BaseException, ...], times: int=1) 
         except errors as err:
             if tries == times:
                 raise err
-            print(f'retrying {operation}')
+            print(f"retrying {operation}")
             time.sleep(math.pow(5, tries))
             tries += 1

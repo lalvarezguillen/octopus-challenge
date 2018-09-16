@@ -4,6 +4,7 @@ Contains the http handlers of this application
 import json
 import tornado
 import tornado.web
+import requests
 from .schemas import TaskRequestSchema, TaskResultSchema
 from .jobs import CELERY, frequency_analysis, sentiment_analysis
 from .models import Token
@@ -15,7 +16,7 @@ class MainHandler(tornado.web.RequestHandler):
         """
         Renders the landing page.
         """
-        self.render("main.html")
+        return self.render("main.html")
 
 
 class AnalysisHandler(tornado.web.RequestHandler):
@@ -25,19 +26,21 @@ class AnalysisHandler(tornado.web.RequestHandler):
         """
         if not task_id:
             self.set_status(404)
-            self.finish()
-            return
+            return self.finish()
 
         task = CELERY.AsyncResult(task_id)
         self.set_header("Content-Type", "application/json")
 
         if not task.ready():
             self.set_status(204)
-            self.finish()
-            return
+            return self.finish()
+
+        if isinstance(task.result, BaseException):
+            self.set_status(400)
+            return self.finish()
 
         self.set_status(200)
-        self.finish(tornado.escape.json_encode(task.result))
+        return self.finish(tornado.escape.json_encode(task.result))
 
     def post(self, **_):
         """

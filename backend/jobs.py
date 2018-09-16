@@ -2,20 +2,29 @@
 This module should contain the asynchronous tasks that power
 this project
 """
-from typing import List
+from typing import List, Optional
+import requests
 from celery import Celery
 from .config import Config
 from .schemas import TaskResultSchema
-from .scraping import fetch_page_text
+from .scraping import fetch_page_text, RetriableHTTPError, HTTPError
 from .nlp import get_frequent_tokens, TokenCount
 from .models import URL, Token
+from .helpers import retry
 
 
 CELERY = Celery(__name__, broker=Config.REDIS_HOST, backend=Config.REDIS_HOST)
 
+# Errors worth retrying when trying to fetch a website
+HTTPErrors = (
+    RetriableHTTPError,
+    requests.ConnectionError,
+    requests.ConnectTimeout,
+)
+
 
 @CELERY.task(bind=True)
-def frequency_analysis(self, url: str) -> List[TokenCount]:
+def frequency_analysis(self, url: str) -> Optional[List[TokenCount]]:
     """
     Takes care of fetching a web page, extracting its tokens,
     and getting the frequency of its non-stopword tokens.
@@ -26,7 +35,7 @@ def frequency_analysis(self, url: str) -> List[TokenCount]:
         web page, and their counts.
     """
     print("Frequency Analysis Task")
-    page_text = fetch_page_text(url)
+    page_text = retry(lambda: fetch_page_text(url), HTTPErrors, times=2)
     counts = get_frequent_tokens(page_text, 100)
     print(counts)
     store_in_db.delay(url, counts)

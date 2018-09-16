@@ -66,7 +66,7 @@ class App extends Component {
                     </span>
                   </button>
 
-                  <NavLink className="navbar-brand" to="/">SendGrid</NavLink>
+                  <NavLink className="navbar-brand" to="/">Octopus Challenge</NavLink>
 
                   <div
                     className="collapse navbar-collapse align-items-center flex-sm-row g-pt-10 g-pt-5--lg"

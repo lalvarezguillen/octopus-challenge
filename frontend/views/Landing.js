@@ -33,7 +33,7 @@ class LandingPage extends React.Component {
    * @param {*} event The JS event produced on form submission.
    */
   async handleSubmit(event) {
-    this.setState({ loading: true });
+    this.setState({ loading: true, tokens: [] });
     event.preventDefault();
     let taskId;
     try {
@@ -88,7 +88,7 @@ class LandingPage extends React.Component {
     } catch (err) {
       console.error(err);
       this.setState({ loading: false });
-      let msg = `There was a problem fetching your results (code ${err.response.status}`
+      let msg = `There was a problem fetching your results (code ${err.response.status})`
       return this.alertError(msg)
     }
     if (resp.status == 200) {
