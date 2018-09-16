@@ -23,4 +23,4 @@ W6wl/RR10uDpDoqBGKnbAkEAzNNQTrPv6cnSMko9ccjyyq70i5myxMyuJdLsLKMH
 xNO09nMsdTVxfGJBgvAN8zSFsHOPyLqFWJVJlAOZCpz/aw==
 -----END RSA PRIVATE KEY-----"
 
-pytest tests --cov=backend --cov-report term-missing
+python run_app.py

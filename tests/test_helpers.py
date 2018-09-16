@@ -1,4 +1,4 @@
-from octopus.helpers import parse_pagination
+from backend.helpers import parse_pagination
 
 
 def test_parse_pagination():

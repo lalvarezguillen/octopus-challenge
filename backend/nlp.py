@@ -6,6 +6,9 @@ import re
 from typing import Iterator, Dict, Union, List
 from collections import Counter
 from nltk import word_tokenize
+import nltk
+
+nltk.download("stopwords")
 from nltk.corpus import stopwords
 
 

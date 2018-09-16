@@ -24,9 +24,9 @@ def make_app():
             (r"/tasks/?", AnalysisHandler),
             (r"/tasks/(?P<task_id>[a-zA-Z0-9\-_]+)", AnalysisHandler),
         ],
-        debug=True,
+        debug=Config.DEBUGGING,
         static_path=static_path,
-        encryptor=Encryptor(Config.PRIVATE_KEY_FILE, Config.SALT),
+        encryptor=Encryptor(Config.PRIVATE_KEY, Config.SALT),
     )
     app.settings.update(Config.export())
     CELERY.conf.update(app.settings)
@@ -39,7 +39,13 @@ def setup_db():
     """
     Sets up the DB
     """
-    db.init(Config.DB_HOST)
+    db.init(
+        Config.DB_NAME,
+        host=Config.DB_HOST,
+        port=Config.DB_PORT,
+        user=Config.DB_USER,
+        password=Config.DB_PASS,
+    )
     db.connect()
     db.create_tables([URL, Token])
 

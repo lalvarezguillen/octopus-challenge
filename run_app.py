@@ -1,4 +1,4 @@
-from octopus.app import run_app, setup_db
+from backend.app import run_app, setup_db
 
 
 if __name__ == "__main__":

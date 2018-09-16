@@ -3,8 +3,8 @@ from tornado.testing import AsyncHTTPTestCase, gen_test
 from tornado.web import Application
 from tornado.httpserver import HTTPRequest
 from unittest import mock
-from octopus.app import make_app
-import octopus.handlers
+from backend.app import make_app
+import backend.handlers
 
 
 class TestMainHandler(AsyncHTTPTestCase):
@@ -16,8 +16,8 @@ class TestMainHandler(AsyncHTTPTestCase):
         assert resp.code == 200
 
 
-@mock.patch("octopus.handlers.frequency_analysis")
-@mock.patch("octopus.handlers.CELERY")
+@mock.patch("backend.handlers.frequency_analysis")
+@mock.patch("backend.handlers.CELERY")
 class TestAnalysisHandler(AsyncHTTPTestCase):
     def get_app(self):
         return make_app()
@@ -63,7 +63,7 @@ class TestAnalysisHandler(AsyncHTTPTestCase):
         assert resp_body["id"] == "dummy-task"
 
 
-@mock.patch("octopus.handlers.Token")
+@mock.patch("backend.handlers.Token")
 class TestTokensHandler(AsyncHTTPTestCase):
     def get_app(self):
         return make_app()

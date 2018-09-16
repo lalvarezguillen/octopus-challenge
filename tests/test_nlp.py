@@ -1,4 +1,4 @@
-from octopus.nlp import is_word, tokenize_text, get_frequent_tokens
+from backend.nlp import is_word, tokenize_text, get_frequent_tokens
 
 
 class TestIsWord:

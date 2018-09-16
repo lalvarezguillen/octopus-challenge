@@ -17,15 +17,16 @@ class Encryptor:
     the encrypting, hashing and decrypting needs of the project
     """
 
-    def __init__(self, private_key_file: str, salt: str):
+    def __init__(self, private_key: str, salt: str):
         """
         Initialize an Encryptor
         Args:
             private_key_file: The filepath to a private RSA key.
             salt: a string to use as cryptographic salt
         """
-        with open(private_key_file, "rb") as f:
-            self.private, self.public = self.generate_keys(f.read())
+        self.private, self.public = self.generate_keys(
+            private_key.encode("utf8")
+        )
         self.salt = salt.encode("utf8")
 
     @staticmethod

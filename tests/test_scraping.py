@@ -1,6 +1,6 @@
 import pytest
 import responses
-from octopus.scraping import fetch_page_text, RetriableHTTPError, HTTPError
+from backend.scraping import fetch_page_text, RetriableHTTPError, HTTPError
 
 
 @responses.activate

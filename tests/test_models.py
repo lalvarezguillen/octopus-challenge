@@ -1,28 +1,18 @@
+from Crypto.PublicKey import RSA
 from peewee import SqliteDatabase
-from octopus.models import URL, Token, db as db
-from octopus.crypto import Encryptor
-from .test_crypto import CryptoTestsMixin
+from backend.models import URL, Token, db as db
+from backend.crypto import Encryptor
 
 
-class MockedEncryptor:
-    def encrypt(self, val: str) -> str:
-        return val
-
-    def decrypt(self, val: str) -> str:
-        return val
-
-    def salted_hash(self, val: str) -> str:
-        return val
-
-
-class TestURL(CryptoTestsMixin):
+class TestURL:
     @classmethod
     def setup_class(cls):
-        super().setup_class()
         test_db = SqliteDatabase(":memory:")
         URL._meta.set_database(test_db)
         db.create_tables([URL])
-        cls.enc = Encryptor(cls.private_key_file, "salty")
+        cls.enc = Encryptor(
+            RSA.generate(2048).exportKey().decode("utf8"), "salty"
+        )
 
     @classmethod
     def teardown_class(cls):
@@ -48,14 +38,15 @@ class TestURL(CryptoTestsMixin):
         assert isinstance(queried_entry, URL)
 
 
-class TestToken(CryptoTestsMixin):
+class TestToken:
     @classmethod
     def setup_class(cls):
-        super().setup_class()
         test_db = SqliteDatabase(":memory:")
         Token._meta.set_database(test_db)
         db.create_tables([Token])
-        cls.enc = Encryptor(cls.private_key_file, "salty")
+        cls.enc = Encryptor(
+            RSA.generate(2048).exportKey().decode("utf8"), "salty"
+        )
 
     @classmethod
     def teardown_class(cls):
