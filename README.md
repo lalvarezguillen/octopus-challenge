@@ -33,8 +33,10 @@ For more information about each of the configurable paramaters, read their docum
 
 ### Handling secrets securily
 
-To be composed
-
+* Avoid including production/staging secrets in the repo
+* Avoid including production/staging secrets in the container build
+* Environment variables should be a non-terrible way to inject sensitive information when launching the services
+* Docker Secrets should be the preferred alternative, if the infrastructure permits.
 
 ## Hacking on the project
 
