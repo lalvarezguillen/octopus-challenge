@@ -115,12 +115,11 @@ class Token(BaseModel):
             .offset((page) * size)
             .limit(size)
         )
-        tokens = [cls.decrypt_entry(entry, enc) for entry in cursor]
+        tokens = [entry.decrypt(enc) for entry in cursor]
         total = cls.select().count()
         return tokens, total
 
-    @staticmethod
-    def decrypt_entry(entry: "Token", enc: Encryptor) -> TokenCount:
+    def decrypt(self, enc: Encryptor) -> TokenCount:
         """
         Decrypts the DB entry of a token.
         Args:
@@ -130,9 +129,10 @@ class Token(BaseModel):
             Contains the plain text version of the token, and its frequency
             count.
         """
-        decrypted = Token(
-            hash=entry.hash,
-            encrypted=enc.decrypt(entry.encrypted),
-            frequency=entry.encrypted,
+        decrypted = self.__class__(
+            hash=self.hash,
+            encrypted=enc.decrypt(self.encrypted),
+            frequency=self.frequency,
         )
-        return TokenSchema().dump(decrypted).data
+        dumped = TokenSchema().dump(decrypted).data
+        return dumped

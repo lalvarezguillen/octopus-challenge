@@ -4,11 +4,13 @@ This module contains code to set up tornado and celery.
 import os
 import tornado.ioloop
 import tornado.web
+import peewee
 from .handlers import MainHandler, TokensHandler, AnalysisHandler
 from .config import Config
 from .models import BaseModel, URL, Token, db
 from .jobs import CELERY
 from .crypto import Encryptor
+from .helpers import retry
 
 
 def make_app():
@@ -46,7 +48,7 @@ def setup_db():
         user=Config.DB_USER,
         password=Config.DB_PASS,
     )
-    db.connect()
+    retry(db.connect, (peewee.OperationalError, peewee.InternalError), times=5)
     db.create_tables([URL, Token])
 
 

@@ -108,11 +108,12 @@ class TestToken:
         # Data is already decrypted
         assert page1[0]["token"] in words
 
-    def test_decrypt_entry(self):
+    def test_decrypt(self):
         count = {"token": "Sparta", "frequency": 5}
         token = Token.update_count(count, self.enc)
 
-        decrypted = Token.decrypt_entry(token, self.enc)
+        decrypted = token.decrypt(self.enc)
         assert token.encrypted != decrypted["token"]
         assert self.enc.decrypt(token.encrypted) == decrypted["token"]
+        assert token.frequency == decrypted['frequency']
 

@@ -5,11 +5,11 @@ Processing needs of this project.
 import re
 from typing import Iterator, Dict, Union, List
 from collections import Counter
-from nltk import word_tokenize
 import nltk
-
 nltk.download("stopwords")
+nltk.download('punkt')
 from nltk.corpus import stopwords
+from nltk import word_tokenize
 
 
 ENGLISH_STOPWORDS = stopwords.words("english")

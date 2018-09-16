@@ -1,11 +1,11 @@
 export DEBUGGING=1
 export PORT=3000
-export DB_HOST=localhost
+export DB_HOST=172.19.0.2
 export DB_NAME=octopus
 export DB_PORT=3306
 export DB_USER=root
 export DB_PASS=root
-export REDIS_HOST='redis://localhost:6379'
+export REDIS_HOST='redis://172.19.0.3:6379'
 export SALT='it is salty'
 export PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
 MIICXgIBAAKBgQDeUQU6jLD8Ez+om48UWaBpLFuJR24iD4m/BhVALmGeQkp+eRCk
