@@ -6,7 +6,6 @@
 notes.md
 .pytest_cache
 *.sqlite3
-*.key
 *node_modules
 .coverage
 dist
