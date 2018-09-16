@@ -1,8 +1,8 @@
 language: python
 python:
   - "3.6"
-  - "3.7"
+  - "3.7-dev"
 install:
-  -pip install -r requirements.dev.txt -r requirements.dist.txt
+  - pip install -r requirements.dev.txt -r requirements.dist.txt
 script:
-  bash run_tests.sh
+  - bash run_tests.sh
